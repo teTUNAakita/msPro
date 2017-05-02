@@ -28,4 +28,6 @@ The following command line shows the simplest usage of msPro:
 ## Memo
 - Number of species is limited to ten.
 
-- hoge
+- It's good to add some files of the joint probability distribution of divergence and tract length as examples.
+
+- Test to see if **msPro** runs in Linux.
