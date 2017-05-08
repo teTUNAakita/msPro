@@ -19,11 +19,16 @@ gcc -O3 -Wall -Wextra -o msPro msPro.c streecPro.c rand1.c -lm -w
 ## Running msPro
 The following command line shows the simplest usage of msPro:
 ```
-./msC nsam nreps -t 2NμL -r 0.0 L -c 2Ng(L-1) λ -b 2Nh(L-1) dist.txt
+./msC nsam nreps -t 2NμL -r 0.0 L -c 2Ng(L-1) lambda -b 2Nh(L-1) dist.txt
 ```
-*nsam* is the sample size. *nreps* is the number of independent samples to generate. *2NμL* after the `-t` switch is the population mutation parameter per region, where N is the current population size, *L* is the length of focal region, and *μ* is the mutation rate per site. ***0.0 after the ‘-r’ switch is the crossing-over rate per site and this should be removed.*** Gene conversion is assumed to initiate between a specified pair of sites in a given chromosome with probability *g*, and the conversion tract length is assumed to follow geometric distribution with mean λ (Wiuf and Hein, 2000). *2Ng(L-1)* after the `-c` switch is the population gene conversion rate.
+*nsam* is the sample size. *nreps* is the number of independent samples to generate. 2NμL after the ‘-t’ switch is the population mutation parameter per region, where N is the current population size, L is the length of focal region, and μ is the mutation rate per site. ***0.0 after the ‘-r’ switch is the crsssing-over rate per site and this should be removed.*** Gene conversion is assumed to initiate between a specified pair of sites in a given chromosome with probability *g*, and the conversion tract length is assumed to follow geometric distribution with mean λ (Wiuf and Hein, 2000). *2Ng(L-1)* after the `-c` switch is the population gene conversion rate.
 λ is the mean conversion tract length.   
+
 ## Output
 
 ## Memo
 - Number of species is limited to ten.
+
+- It's good to add some files of the joint probability distribution of divergence and tract length as examples.
+
+- Test to see if **msPro** runs in Linux.
