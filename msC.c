@@ -368,7 +368,7 @@ if(0){
       tractl[j][2] = 0.0 ;
       // proportion
       for ( k=0; k < pars.cp.n_two_dim; k++ ){
-        if ( (two_dim[k][1] == species[i][0]) && (tractl[j][0] <= two_dim[k][0]) ){
+        if ( (two_dim[k][1] - species[i][0] < epsilon ) && (tractl[j][0] <= two_dim[k][0]) ){
           tractl[j][2] += ( two_dim[k][2] * (1.0/two_dim[k][0]) ) ;
         }
       }

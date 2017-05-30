@@ -127,7 +127,7 @@ struct segl *segtre_mig ( struct c_params *cp, int *pnsegs, int **tmp, double *t
 		f = cp->f ;
 		track_len = cp->track_len ;
 
-		printf("r=%f, nsites=%d\n", r, nsites);
+		//printf("r=%f, nsites=%d\n", r, nsites);
 		// N E W ========
 		f2 = cp->f2 ;
 		// N E W =====end
