@@ -102,6 +102,7 @@ Modified pickb() and pickbmf() to eliminate rare occurrence of fixed mutations T
 #include "ms.h"
 
 #define SITESINC 100000
+#define epsilon 0.000001
 
 unsigned maxsites = SITESINC ;
 
@@ -266,7 +267,8 @@ char *argv[] ;
       else {
         f_species = 0 ;
         for ( i=0; i < n_species; i++ ){
-          if ( species[i][0] == c2 ){ // species already exists
+          //TA use epsilon for chcking "species[i][0] == c2"
+          if ( species[i][0] - c2 < epsilon ){ // species already exists
             species[i][2] += c3 ;
             if ( species[i][1] < c1 ){
               species[i][1] = c1 ;
@@ -823,7 +825,7 @@ int gensam ( char **list, double *pprobss, double *ptmrca, double *pttot, int **
         }
         pars.cp.deventlist = NULL ;
 
-        arg = 4 ;
+        arg = 4 ;//TA
 
         int lenf ;
 
