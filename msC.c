@@ -830,6 +830,7 @@ int gensam ( char **list, double *pprobss, double *ptmrca, double *pttot, int **
         while ( arg < argc ){
           if ( argv[arg][0] != '-' ){fprintf (stderr," argument should be -%s ?\n", argv[arg]) ; usage() ; }
           switch ( argv[arg][1] ){
+            //TA
             /*case 'f' : // arguments from FILE
             if ( ntbs > 0 ) { fprintf(stderr," can't use tbs args and -f option.\n"); exit(1); }
             arg++ ;
@@ -863,9 +864,6 @@ int gensam ( char **list, double *pprobss, double *ptmrca, double *pttot, int **
             }
             break;*/
             case 'c' : // g/r and 1/q
-
-
-
             arg++;
             argcheck( arg, argc, argv);
             pars.cp.f = atof(  argv[arg++] );
@@ -889,7 +887,8 @@ int gensam ( char **list, double *pprobss, double *ptmrca, double *pttot, int **
             argcheck( arg, argc, argv);
             pars.mp.theta = atof(  argv[arg++] );
             break;
-            case 's' : // S
+            //TA
+            /*case 's' : // S
             arg++;
             argcheck (arg, argc, argv) ;
             if ( argv[arg-1][2] == 'e' ){  // command line seeds, not care
@@ -900,7 +899,7 @@ int gensam ( char **list, double *pprobss, double *ptmrca, double *pttot, int **
             else { // S
               pars.mp.segsitesin = atoi (argv[arg++]) ;
             }
-            break;
+            break;*/
             case 'F' :
             arg++;
             argcheck( arg, argc, argv);
@@ -910,14 +909,15 @@ int gensam ( char **list, double *pprobss, double *ptmrca, double *pttot, int **
               usage();
             }
             break;
-            case 'T' : // -T tree output
+            //TA
+            /*case 'T' : // -T tree output
             pars.mp.treeflag = 1 ;
             arg++;
             break;
             case 'L' : // -L length of tree
             pars.mp.timeflag = 1 ;
             arg++;
-            break;
+            break;*/
             case 'I' : // subpopulation
             arg++;
             if ( count == 0 ) {
