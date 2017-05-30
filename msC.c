@@ -793,7 +793,7 @@ int gensam ( char **list, double *pprobss, double *ptmrca, double *pttot, int **
           pars.cp.size_div = 0 ;
           // N E W 2 ======
 
-          pars.cp.r = 0 ; // TA 2017030
+
 
 
           pars.cp.npop = npop = 1 ;
@@ -811,8 +811,11 @@ int gensam ( char **list, double *pprobss, double *ptmrca, double *pttot, int **
           pars.cp.alphag = (double *) malloc((unsigned)(( pars.cp.npop ) *sizeof(double)));
           (pars.cp.alphag)[0] = 0.0  ;
           pars.cp.nsites = 2 ; // Length
-          pars.cp.nsites = atoi( argv[3] ); // test
 
+          // TA 2017030/////////////////////
+          pars.cp.r = 0 ;
+          pars.cp.nsites = atoi( argv[3] );
+          //////////////////////////////////
         }
         else{ // if tbs is used
           npop = pars.cp.npop ;
