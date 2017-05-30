@@ -793,6 +793,8 @@ int gensam ( char **list, double *pprobss, double *ptmrca, double *pttot, int **
           pars.cp.size_div = 0 ;
           // N E W 2 ======
 
+          pars.cp.r = 0 ; // TA 2017030
+
 
           pars.cp.npop = npop = 1 ;
           pars.cp.mig_mat = (double **)malloc( (unsigned) sizeof(double*));
@@ -809,6 +811,8 @@ int gensam ( char **list, double *pprobss, double *ptmrca, double *pttot, int **
           pars.cp.alphag = (double *) malloc((unsigned)(( pars.cp.npop ) *sizeof(double)));
           (pars.cp.alphag)[0] = 0.0  ;
           pars.cp.nsites = 2 ; // Length
+          pars.cp.nsites = atoi( argv[3] ); // test
+
         }
         else{ // if tbs is used
           npop = pars.cp.npop ;
@@ -816,14 +820,14 @@ int gensam ( char **list, double *pprobss, double *ptmrca, double *pttot, int **
         }
         pars.cp.deventlist = NULL ;
 
-        arg = 3 ;
+        arg = 4 ;
 
         int lenf ;
 
         while ( arg < argc ){
           if ( argv[arg][0] != '-' ){fprintf (stderr," argument should be -%s ?\n", argv[arg]) ; usage() ; }
           switch ( argv[arg][1] ){
-            case 'f' : // arguments from FILE
+            /*case 'f' : // arguments from FILE
             if ( ntbs > 0 ) { fprintf(stderr," can't use tbs args and -f option.\n"); exit(1); }
             arg++ ;
             argcheck ( arg, argc, argv) ;
@@ -854,8 +858,11 @@ int gensam ( char **list, double *pprobss, double *ptmrca, double *pttot, int **
               fprintf (stderr,"with -r option must specify both rec_rate and nsites>1\n") ;
               usage ();
             }
-            break;
+            break;*/
             case 'c' : // g/r and 1/q
+
+
+
             arg++;
             argcheck( arg, argc, argv);
             pars.cp.f = atof(  argv[arg++] );
