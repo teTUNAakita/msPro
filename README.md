@@ -4,7 +4,7 @@ ctrl + shift + M: show preview
 # msPro
 
 ## Introduction
-**msPro** is a simulation program to generate patterns of single nucleotide polymorphism (SNP) data in a region that have experienced homologous recombination with different species. The software was developed by modifying the commonly used Hudson’s **ms** simulator (Hudson, 1990). **msPro** is flexible so that it can consider the coalescent process of a particular species (population), around which there are a number of different species and the focal species potentially undergoes recombination with these species. **msPro** also incorporates population size changes, population structures, and admixture events simultaneously as **ms** does. The software runs coalescent simulations conditional on the joint probability distribution of divergence and successfully integrated tract length of foreigh DNA. A scientific paper describing **msPro** in detail will be published elsewhere, entitled "The coalescent for prokaryotes with homologous recombination from external source" by Tetsuya Akita, Shohei Takuno, and Hideki Innan.
+**msPro** is a simulation program to generate patterns of single nucleotide polymorphism (SNP) data in a region that have experienced homologous recombination with different species. The software was developed by modifying the commonly used Hudson’s **ms** simulator (Hudson, 2002; URL: http://home.uchicago.edu/rhudson1/source/mksamples.html). **msPro** is flexible so that it can consider the coalescent process of a particular species (population), around which there are a number of different species and the focal species potentially undergoes recombination with these species. **msPro** also incorporates population size changes, population structures, and admixture events simultaneously as **ms** does. The software runs coalescent simulations conditional on the joint probability distribution of divergence and successfully integrated tract length of foreigh DNA. A scientific paper describing **msPro** in detail will be published elsewhere, entitled "The coalescent for prokaryotes with homologous recombination from external source" by Tetsuya Akita, Shohei Takuno, and Hideki Innan.
 
 ## Download and compilation
 You can download the most up to date version of msPro via GitHub:
@@ -20,22 +20,50 @@ gcc -O3 -Wall -Wextra -o msPro msPro.c streecPro.c rand1.c -lm -w
 ## Running msPro
 The following command line shows the simplest usage of msPro:
 ```
-./msC nsam nreps -t 2NμL -r 0.0 L -c 2Ng(L-1) λ -b 2Nh(L-1) dist.txt
+./msC nsam nreps L -t 2NμL -c 2Ng(L-1) λ -b 2Nh(L-1) dist.txt
 ```
-*nsam* is the sample size. *nreps* is the number of independent samples to generate. 2*NμL* after the ‘-t’ switch is the population mutation parameter per region, where *N* is the current population size, *L* is the length of a focal region, and μ is the mutation rate per site per generation. ***after the ‘-r’ switch is the crossing-over rate per site and this should be removed?*** Intra-species gene conversion is assumed to initiate at any position at rate *g* per site per generation. Tract length of gene conversion is assumed to follow a geometric distribution with mean λ (Wiuf and Hein, 2000). 2*Ng(L-1)* after the `-c` switch is the population gene conversion rate (within species), and λ is the mean conversion tract length. By contrast to intra-species gene conversion, the treatment of inter-species gene conversion is a little tricky (ST: is thie sentence needed?). Consider backward argument: the backward initiation is occurred at rate *h* per site per generation (i.e. *h* is the rate at which the lineage experiences a recombination event from external source that is initiated at a site). 2*Nh(L-1)* after the `-b` switch is the population gene conversion rate (between species). "dist.txt" specifies the joint probability distribution of divergence and tract length that is successfully integrated (see Fig. XX in out paper), as explained in the next.   
+*nsam* is the sample size. *nreps* is the number of independent samples to generate. *L* is the length of a focal region. 2*NμL* after the ‘-t’ switch is the population mutation parameter per region, where *N* is the current population size, and μ is the mutation rate per site per generation. Intra-species gene conversion is assumed to initiate at any position at rate *g* per site per generation. Tract length of gene conversion is assumed to follow a geometric distribution with mean *λ* (Wiuf and Hein, 2000). 2*Ng(L-1)* after the `-c` switch is the population gene conversion rate (within species), and λ is the mean conversion tract length. Treatment of inter-species gene conversion into is based on backward argument: the backward initiation is occurred at rate *h* per site per generation (i.e. *h* is the rate at which the lineage experiences a recombination event from external source that is initiated at a site). 2*Nh(L-1)* after the `-b` switch is the population gene conversion rate (between species). "dist.txt" specifies the name of a file containing joint probability distribution of divergence and tract length that is successfully integrated (see Fig. XX in our paper), as explained in the next. This prior distribution is necessary for running **msPro** and is located in "msPro".
+
+Here is an example command line:
+```
+msC 5 1 50 -t 1.0 -c 1 10 -b 0.1 dist.txt
+```
+In this case, the program will output 1 sample, each consisting of 5 individuals (chromosomes), generated assuming that 2*NμL* = 1.0, 2*Ng(L-1)* = 1.0, *λ* = 10, 2*Nh(L-1)* = 0.1, and the prior distribution is specified by "dist.txt", as explain in the next.
 
 ## Format of external resource
+Example of the format of input file ("dist.txt", above input example) is as follows:
+```
+10	 0.3	0.05
+50	 0.2	0.5
+100	0.1	0.3
+1000   0.05   0.15
+```
 
-
+This file indicates that there are four types of a prior distribution. The first column is the tract length of external resource (*x*). The second column is the divergence (*d*). The third column is the frequency (*f*). For each type, *x* > 0 and 0 < *d* < 1 must be satisfied (the frequency is conditioned such that its summation becomes unity). Number of divergence (i.e., species around the focal population) is limited to ten.
 
 ## Output
 
-## References
-- Hudson (2002) (1990?)
+The output from the example command in the previous section would look like this (the exact output will depend on the random number generator) :
 
-- Wiuf and Hein (2000)
+```
+./msC 5 1 50 -t 1 -c 1 10 -b 0.1 dist.txt
+60073 49535 50877
+segsites: 3, nch: 1
+00000000000000001000000000000000000000000000000000
+00000000000000000000000000000000000000000000000000
+00000000000000000000000001000000000000000000000000
+00100110000010000000000001000000000000000000000000
+00000000000000000010000000000000000000000000000000
+```
+The first line of the output is the command line. The second line shows the random number seeds. Following these two lines are a set of lines for each sample. Each sample is preceded by a line with just “//” on it **(For now, "//" is removed... is it needed??)**. That line is followed by “segsites:” and the number of mutation events in the sample. It should be noted that **msPro** allows back mutation events in the same sites, although the type of sites is 0 (original) or 1 (derived); and followed by "nch:" and the number of inter-species recombination events occurred in a focusing region. From this result, it is inferred that inter-species recombination occurred in the external branch involved in fourth chromosome (and three mutation events occurred anywhere in the sample genealogy).
+
+## References
+- Hudson, R R., (2002) Generating samples under a Wright-Fisher neutral model. Bioinformatics 18:337-338,
+
+- Wiuf, C., and Hein, J., (2000) The coalescent with gene conversion. Genetics 155:451-462
 
 ## Memo
+<!--
 - Number of species is limited to ten.
 
 - It's good to add some files of the joint probability distribution of divergence and tract length as examples.
@@ -43,5 +71,7 @@ The following command line shows the simplest usage of msPro:
 - Test to see if **msPro** runs in Linux.
 
 - Hudson (1990) in Introduction? Or we should cite Hudson (2002) Bioinformatics.  It's better to add the URL to **ms**'s manual.
+-->
+- Test to see if **msPro** runs in Linux.
 
-- Think about we should submit our paper to bioRxiv
+- Think about we should submit our paper to bioRxiv **TA: I agree**
