@@ -61,7 +61,7 @@ segsites: 3, nch: 1
 00000000000000000000000001000000000000000000000000
 00100110000010000000000001000000000000000000000000
 00000000000000000010000000000000000000000000000000
-```#`
+```
 The first line of the output is the command line. 
 The second line shows the random number seeds. 
 The output contains two replicates in this case.
