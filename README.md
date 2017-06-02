@@ -22,31 +22,31 @@ The following command line shows the simplest usage of msPro:
 ```
 ./msC nsam nreps L -t 2NμL -c 2Ng(L-1) λ -b 2Nh(L-1) dist.txt
 ```
-*nsam* is the sample size. *nreps* is the number of independent samples to generate. *L* is the length of a focal region. 2*NμL* after the ‘-t’ switch is the population mutation parameter per region, where *N* is the current population size, and μ is the mutation rate per site per generation. Intra-species gene conversion is assumed to initiate at any position at rate *g* per site per generation. Tract length of gene conversion is assumed to follow a geometric distribution with mean *λ* (Wiuf and Hein, 2000). 2*Ng(L-1)* after the `-c` switch is the population gene conversion rate (within species), and λ is the mean conversion tract length. Treatment of inter-species gene conversion into is based on backward argument: the backward initiation is occurred at rate *h* per site per generation (i.e. *h* is the rate at which the lineage experiences a recombination event from external source that is initiated at a site). 2*Nh(L-1)* after the `-b` switch is the population gene conversion rate (between species). "dist.txt" specifies the name of a file containing joint probability distribution of divergence and tract length that is successfully integrated (see Fig. XX in our paper), as explained in the next. This prior distribution is necessary for running **msPro** and is located in "msPro".
+*nsam* is the sample size. *nreps* is the number of replicates to generate. *L* is the length of a focal region. 2*NμL* after the ‘-t’ switch is the population mutation parameter per region, where *N* is the current population size, and μ is the mutation rate per site per generation. Intra-species gene conversion is assumed to initiate at any position at rate *g* per site per generation. Tract length of gene conversion is assumed to follow a geometric distribution with mean *λ* (Wiuf and Hein, 2000). 2*Ng(L-1)* after the `-c` switch is the population gene conversion rate (within species), and λ is the mean conversion tract length. Treatment of inter-species gene conversion is based on backward argument: the backward initiation is occurred at rate *h* per site per generation (i.e. *h* is the rate at which the lineage experiences a recombination event from external source that is initiated at a site). 2*Nh(L-1)* after the `-b` switch is the population gene conversion rate (between species). "dist.txt" specifies the name of a file containing joint probability distribution of divergence and tract length that is successfully integrated (see Fig. XX in our paper). This prior distribution is necessary for running **msPro** and is located in "msPro" directory.
 
-Here is an example command line:
+Here is an example of a command line:
 ```
-msC 5 1 50 -t 1.0 -c 1 10 -b 0.1 dist.txt
+msC 5 2 50 -t 1.0 -c 1 10 -b 0.1 dist.txt
 ```
-In this case, the program will output 1 sample, each consisting of 5 individuals (chromosomes), generated assuming that 2*NμL* = 1.0, 2*Ng(L-1)* = 1.0, *λ* = 10, 2*Nh(L-1)* = 0.1, and the prior distribution is specified by "dist.txt", as explain in the next.
+In this case, the program generate two data sets of five DNA sequences. The parameters were set as 2*NμL* = 1.0, 2*Ng(L-1)* = 1.0, *λ* = 10, 2*Nh(L-1)* = 0.1, and the prior distribution of divergence and tract length is specified in "dist.txt", as explained in the following section.
 
-## Format of external resource
-Example of the format of input file ("dist.txt", above input example) is as follows:
+## Format of a prior distribution of divergene and tract length of foreign DNAs
+An example of the format of a input file (specified as "dist.txt" in this case) is as follows:
 ```
-10	 0.3	0.05
-50	 0.2	0.5
+10	0.3	0.05
+50	0.2	0.5
 100	0.1	0.3
-1000   0.05   0.15
+1000	0.05	0.15
 ```
 
-This file indicates that there are four types of a prior distribution. The first column is the tract length of external resource (*x*). The second column is the divergence (*d*). The third column is the frequency (*f*). For each type, *x* > 0 and 0 < *d* < 1 must be satisfied (the frequency is conditioned such that its summation becomes unity). Number of divergence (i.e., species around the focal population) is limited to ten.
+This file indicates that there are four cases of integrated foreign DNAs. The first column is the tract length of integrated DNAs (*x*). The second column is the average nucleotide divergence between the simulated species and one of the species as sourses of foreign DNAs (*d*)；*d* works as a species name. The third column is the frequency given *x* and *d* (*f*). *x* > 0 and 0 < *d* < 1 must be satisfied. The frequency is conditioned such that its summation becomes unity. The number of species around the focal population (i.e., *d*) is limited to ten.  
 
 ## Output
 
-The output from the example command in the previous section would look like this (the exact output will depend on the random number generator) :
+The output format is as follows :
 
 ```
-./msC 5 1 50 -t 1 -c 1 10 -b 0.1 dist.txt
+./msC 5 2 50 -t 1 -c 1 10 -b 0.1 dist.txt
 60073 49535 50877
 segsites: 3, nch: 1
 00000000000000001000000000000000000000000000000000
@@ -54,8 +54,21 @@ segsites: 3, nch: 1
 00000000000000000000000001000000000000000000000000
 00100110000010000000000001000000000000000000000000
 00000000000000000010000000000000000000000000000000
+
+segsites: 3, nch: 1
+00000000000000001000000000000000000000000000000000
+00000000000000000000000000000000000000000000000000
+00000000000000000000000001000000000000000000000000
+00100110000010000000000001000000000000000000000000
+00000000000000000010000000000000000000000000000000
 ```
-The first line of the output is the command line. The second line shows the random number seeds. Following these two lines are a set of lines for each sample. Each sample is preceded by a line with just “//” on it **(For now, "//" is removed... is it needed??)**. That line is followed by “segsites:” and the number of mutation events in the sample. It should be noted that **msPro** allows back mutation events in the same sites, although the type of sites is 0 (original) or 1 (derived); and followed by "nch:" and the number of inter-species recombination events occurred in a focusing region. From this result, it is inferred that inter-species recombination occurred in the external branch involved in fourth chromosome (and three mutation events occurred anywhere in the sample genealogy).
+The first line of the output is the command line.
+The second line shows the random number seeds.
+The output contains two replicates in this case.
+Each replicate starts with "segsites: X, nch: Y", where X is the number of mutations events and Y is the number of inter-species recombination evens.
+Following this lines, you find five chromosomes in each replicate, and 0 and 1 represent different nucleotides.
+It should be noted that **msPro** allows back mutation events, and therefore the allele "1" is not necessarily a derived allele???
+
 
 ## References
 - Hudson, R R., (2002) Generating samples under a Wright-Fisher neutral model. Bioinformatics 18:337-338,
