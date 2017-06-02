@@ -28,9 +28,9 @@ Here is an example of a command line:
 ```
 msC 5 1 50 -t 1.0 -c 1 10 -b 0.1 dist.txt
 ```
-In this case, the program will output one data set of DNA sequences, each consisting of five individuals (chromosomes), generated assuming that 2*NμL* = 1.0, 2*Ng(L-1)* = 1.0, *λ* = 10, 2*Nh(L-1)* = 0.1, and the prior distribution is specified by "dist.txt", as explain in the following section.
+In this case, the program will output one data set of DNA sequences that consists of five individuals (chromosomes). The parameters were set as 2*NμL* = 1.0, 2*Ng(L-1)* = 1.0, *λ* = 10, 2*Nh(L-1)* = 0.1, and the prior distribution of divergence and tract length is specified in "dist.txt", as explained in the following section.
 
-## Format of external source
+## Format of a prior distribution of divergene and tract length of foreign DNAs
 An example of the format of a input file (specified as "dist.txt" in this case) is as follows:
 ```
 10	0.3	0.05
@@ -39,14 +39,14 @@ An example of the format of a input file (specified as "dist.txt" in this case) 
 1000	0.05	0.15
 ```
 
-This file indicates that there are four cases of integrated foreign DNAs. The first column is the tract length of integrated DNAs (*x*). The second column is the average nucleotide divergence between the simulated species and one of the species as a sourse of foreign DNAs (*d*)；*d* works as a species name. The third column is the frequency given *x* and *d* (*f*). *x* > 0 and 0 < *d* < 1 must be satisfied (the frequency is conditioned such that its summation becomes unity). The number of species around the focal population (i.e., *d*) is limited to ten.  
+This file indicates that there are four cases of integrated foreign DNAs. The first column is the tract length of integrated DNAs (*x*). The second column is the average nucleotide divergence between the simulated species and one of the species as sourses of foreign DNAs (*d*)；*d* works as a species name. The third column is the frequency given *x* and *d* (*f*). *x* > 0 and 0 < *d* < 1 must be satisfied. The frequency is conditioned such that its summation becomes unity. The number of species around the focal population (i.e., *d*) is limited to ten.  
 
 ## Output
 
-The output from the example command in the previous section would look like this (the exact output will depend on the random number generator) :
+The output format is as follows :
 
 ```
-./msC 5 1 50 -t 1 -c 1 10 -b 0.1 dist.txt
+./msC 5 2 50 -t 1 -c 1 10 -b 0.1 dist.txt
 60073 49535 50877
 segsites: 3, nch: 1
 00000000000000001000000000000000000000000000000000
@@ -54,8 +54,21 @@ segsites: 3, nch: 1
 00000000000000000000000001000000000000000000000000
 00100110000010000000000001000000000000000000000000
 00000000000000000010000000000000000000000000000000
-```
-The first line of the output is the command line. The second line shows the random number seeds. Following these two lines are a set of lines for each sample. Each sample is preceded by a line with just “//” on it **(For now, "//" is removed... is it needed??)**. That line is followed by “segsites:” and the number of mutation events in the sample. It should be noted that **msPro** allows back mutation events in the same sites, although the type of sites is 0 (original) or 1 (derived); and followed by "nch:" and the number of inter-species recombination events occurred in a focusing region. From this result, it is inferred that inter-species recombination occurred in the external branch involved in the fourth chromosome (and three mutation events occurred anywhere in the sample genealogy).
+
+segsites: 3, nch: 1
+00000000000000001000000000000000000000000000000000
+00000000000000000000000000000000000000000000000000
+00000000000000000000000001000000000000000000000000
+00100110000010000000000001000000000000000000000000
+00000000000000000010000000000000000000000000000000
+```#`
+The first line of the output is the command line. 
+The second line shows the random number seeds. 
+The output contains two replicates in this case.
+Each replicate starts with "segsites: X, nch: Y", where X is the number of mutations events and Y is the number of inter-species recombination evens.
+It should be noted that **msPro** allows back mutation events in the same sites, although the type of sites is 0 (original) or 1 (derived).
+Following this lines, you find five chromosomes in each replicate.
+
 
 ## References
 - Hudson, R R., (2002) Generating samples under a Wright-Fisher neutral model. Bioinformatics 18:337-338,
