@@ -48,6 +48,8 @@ The output format is as follows :
 ```
 ./msC 5 2 50 -t 1 -c 1 10 -b 0.1 dist.txt
 60073 49535 50877
+
+//
 segsites: 3, nch: 1
 00000000000000001000000000000000000000000000000000
 00000000000000000000000000000000000000000000000000
@@ -55,6 +57,8 @@ segsites: 3, nch: 1
 00100110000010000000000001000000000000000000000000
 00000000000000000010000000000000000000000000000000
 
+
+//
 segsites: 3, nch: 1
 00000000000000001000000000000000000000000000000000
 00000000000000000000000000000000000000000000000000
@@ -88,3 +92,5 @@ It should be noted that **msPro** allows back mutation events, and therefore the
 - Test to see if **msPro** runs in Linux.
 
 - Think about we should submit our paper to bioRxiv **TA: I agree**
+
+- Is there something to describe additional informations in this manual?
