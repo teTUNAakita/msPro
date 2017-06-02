@@ -460,9 +460,9 @@ if(0){
     }
     //following is needed!!
 
-    //fprintf (pf,"\n//") ;
+    fprintf (pf,"\n//") ;
     if ( ntbs > 0 ){for ( k=0; k< ntbs; k++ ) printf("\t%s", tbsparamstrs[k] ) ; } // not used
-    //printf("\n");
+    printf("\n");
 
     // generate samples
     segsites = gensam ( list, &probss, &tmrca, &ttot, tmp, time_out, full_list, time_mut, node_mut, nch, dive,
