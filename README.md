@@ -20,13 +20,13 @@ gcc -O3 -Wall -Wextra -o msPro msPro.c streecPro.c rand1.c -lm -w
 ## Running msPro
 The following command line shows the simplest usage of msPro:
 ```
-./msC nsam nreps L -t 2NμL -c 2Ng(L-1) λ -b 2Nh(L-1) dist.txt
+./msPro nsam nreps L -t 2NμL -c 2Ng(L-1) λ -b 2Nh(L-1) dist.txt
 ```
 *nsam* is the sample size. *nreps* is the number of replicates to generate. *L* is the length of a focal region. 2*NμL* after the ‘-t’ switch is the population mutation parameter per region, where *N* is the current population size, and μ is the mutation rate per site per generation. Intra-species gene conversion is assumed to initiate at any position at rate *g* per site per generation. Tract length of gene conversion is assumed to follow a geometric distribution with mean *λ* (Wiuf and Hein, 2000). 2*Ng(L-1)* after the `-c` switch is the population gene conversion rate (within species), and λ is the mean conversion tract length. Treatment of inter-species gene conversion is based on backward argument: the backward initiation is occurred at rate *h* per site per generation (i.e. *h* is the rate at which the lineage experiences a recombination event from external source that is initiated at a site). 2*Nh(L-1)* after the `-b` switch is the population gene conversion rate (between species). "dist.txt" specifies the name of a file containing joint probability distribution of divergence and tract length that is successfully integrated (see Fig. XX in our paper). This prior distribution is necessary for running **msPro** and is located in "msPro" directory.
 
 Here is an example of a command line:
 ```
-msC 5 2 50 -t 1.0 -c 1 10 -b 0.1 dist.txt
+msPro 5 2 50 -t 1.0 -c 1 10 -b 0.1 dist.txt
 ```
 In this case, the program generate two data sets of five DNA sequences. The parameters were set as 2*NμL* = 1.0, 2*Ng(L-1)* = 1.0, *λ* = 10, 2*Nh(L-1)* = 0.1, and the prior distribution of divergence and tract length is specified in "dist.txt", as explained in the following section.
 
@@ -46,25 +46,25 @@ This file indicates that there are four cases of integrated foreign DNAs. The fi
 The output format is as follows :
 
 ```
-./msC 5 2 50 -t 1 -c 1 10 -b 0.1 dist.txt
-60073 49535 50877
+./msPro 5 2 50 -t 1 -c 1 10 -b 0.1 dist.txt
+16723 65395 1320
 
 //
-segsites: 3, nch: 1
-00000000000000001000000000000000000000000000000000
-00000000000000000000000000000000000000000000000000
-00000000000000000000000001000000000000000000000000
-00100110000010000000000001000000000000000000000000
-00000000000000000010000000000000000000000000000000
+segsites: 3, nch: 3
+00000000010000000000010000000000010000000000000000
+00000000000001000000000000000000000000000000000000
+00000000000001000000000000000000000000000000000000
+00000000000001000000000000000000000000000000000000
+00000000000001000100000000000000000000000000000000
 
 
 //
-segsites: 3, nch: 1
-00000000000000001000000000000000000000000000000000
-00000000000000000000000000000000000000000000000000
-00000000000000000000000001000000000000000000000000
-00100110000010000000000001000000000000000000000000
-00000000000000000010000000000000000000000000000000
+segsites: 2, nch: 2
+01000000000000001010011001001000000000011000000000
+00001000100000000000000000000000000100000000000000
+01000000000000001010011001001000000000011000000000
+00001000100000000000000000000000000100000000000000
+01000000000000001010011001001000000000011000000000
 ```
 The first line of the output is the command line.
 The second line shows the random number seeds.
@@ -93,4 +93,4 @@ It should be noted that **msPro** allows back mutation events, and therefore the
 
 - Think about we should submit our paper to bioRxiv **TA: I agree**
 
-- Is there something to describe additional informations in this manual?
+- Add explanation of important options.  
