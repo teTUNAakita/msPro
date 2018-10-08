@@ -9,7 +9,7 @@ ctrl + shift + M: show preview
 ## Download and compilation
 You can download the most up to date version of msPro via GitHub:
 ```
-git clone https://github.com/TeTUNAakita/msPro
+git clone https://github.com/teTUNAakita/msPro
 ```
 
 The source code of the program is written in C and this program is intended to be run on UNIX, or a UNIX-like operating systems, such as Linux or Mac OS X. After downloading, change the directory by: `cd msPro`; and then, compile the program:
