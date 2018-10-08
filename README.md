@@ -77,11 +77,4 @@ Like **ms**, **msPro** allows structures of the focal population, such as expone
 ## References
 - Hudson, R R., (2002) Generating samples under a Wright-Fisher neutral model. Bioinformatics 18:337-338,
 
-- Wiuf, C., and Hein, J., (2000) The coalescent with gene conversion. Genetics 155:451-462
-
-## Memo
-- Test to see if **msPro** runs in Linux.
-
-- Think about we should submit our paper to bioRxiv **TA: I agree**
-
-- Add explanation of important options.  
+- Wiuf, C., and Hein, J., (2000) The coalescent with gene conversion. Genetics 155:451-462 
