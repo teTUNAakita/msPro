@@ -9,7 +9,7 @@ ctrl + shift + M: show preview
 ## Download and compilation
 You can download the most up to date version of msPro via GitHub:
 ```
-git clone https://github.com/TetsuyaAkita/msPro
+git clone https://github.com/TeTUNAakita/msPro
 ```
 
 The source code of the program is written in C and this program is intended to be run on UNIX, or a UNIX-like operating systems, such as Linux or Mac OS X. After downloading, change the directory by: `cd msPro`; and then, compile the program:
@@ -26,7 +26,7 @@ The following command line shows the simplest usage of msPro:
 
 Here is an example of a command line:
 ```
-msPro 5 2 50 -t 1.0 -c 1 10 -b 0.1 dist.txt
+./msPro 5 2 50 -t 1.0 -c 1 10 -b 0.1 dist.txt
 ```
 In this case, the program generate two data sets of five DNA sequences. The parameters were set as 2*NμL* = 1.0, 2*Ng(L-1)* = 1.0, *λ* = 10, 2*Nh(L-1)* = 0.1, and the prior distribution of divergence and tract length is specified in "dist.txt", as explained in the following section.
 
