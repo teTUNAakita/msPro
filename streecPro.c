@@ -94,7 +94,7 @@ static struct segl *seglst = NULL ;
 void printon () ; //st
 
 struct segl *segtre_mig ( struct c_params *cp, int *pnsegs, int **tmp, double *time_out, int *nch, double **two_dim,
-	double *divergence, **tractl ) { //st add tractl
+	double *divergence, double **tractl ) { //st add tractl
 
 		int i, j, k, seg, dec, pop, pop2, c1, c2, ind, rchrom  ;
 		int migrant, source_pop, *config ;
